@@ -7,9 +7,6 @@
   <title>బళ్ల వారి వంశ వృక్షం</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- <link
-    href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu:wght@500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap"
-    rel="stylesheet"> -->
   <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@100..800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -27,7 +24,7 @@
       --ink: #2a241a;
       --ink-soft: #6a6151;
       --line: #e4d8b8;
-      --shadow: 0 8px 22px rgba(22, 32, 25, 0.14);
+      --shadow: 0 8px 22px rgba(22, 32, 25, .14);
     }
 
     * {
@@ -46,7 +43,7 @@
       font-family: 'Anek Telugu', sans-serif;
     }
 
-    /* ===== HERO ===== */
+    /* HERO */
     .hero {
       position: relative;
       background: radial-gradient(120% 140% at 50% 0%, #24382a 0%, var(--bark) 45%, var(--bark-deep) 100%);
@@ -60,9 +57,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(219, 166, 70, 0.12), transparent 40%),
-        radial-gradient(circle at 85% 10%, rgba(219, 166, 70, 0.10), transparent 45%);
+      background: radial-gradient(circle at 15% 20%, rgba(219, 166, 70, .12), transparent 40%), radial-gradient(circle at 85% 10%, rgba(219, 166, 70, .10), transparent 45%);
       pointer-events: none;
     }
 
@@ -71,8 +66,8 @@
       height: 46px;
       margin: 0 auto 14px;
       border-radius: 50%;
-      background: rgba(219, 166, 70, 0.14);
-      border: 1px solid rgba(219, 166, 70, 0.35);
+      background: rgba(219, 166, 70, .14);
+      border: 1px solid rgba(219, 166, 70, .35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -138,12 +133,12 @@
       letter-spacing: .03em;
     }
 
-    /* ===== TOOLBAR ===== */
+    /* TOOLBAR */
     .toolbar {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(246, 240, 222, 0.92);
+      background: rgba(246, 240, 222, .92);
       backdrop-filter: blur(6px);
       border-bottom: 1px solid var(--line);
       padding: 10px 16px;
@@ -164,8 +159,8 @@
       font-size: 13.5px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      transition: transform .15s ease, background .15s ease, color .15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .05);
+      transition: transform .15s, background .15s, color .15s;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -203,7 +198,7 @@
       text-align: center;
     }
 
-    /* ===== LEGEND ===== */
+    /* LEGEND */
     .legend {
       max-width: 780px;
       margin: 0 auto;
@@ -254,12 +249,10 @@
       height: 11px;
     }
 
-    /* ===== CANVAS / SCROLL AREA ===== */
+    /* CANVAS */
     .canvas {
       overflow: auto;
-      background:
-        radial-gradient(circle at 25% 15%, rgba(74, 121, 86, 0.06), transparent 45%),
-        var(--parchment);
+      background: radial-gradient(circle at 25% 15%, rgba(74, 121, 86, .06), transparent 45%), var(--parchment);
       padding: 50px 60px 90px;
       cursor: grab;
     }
@@ -274,7 +267,7 @@
       min-width: 100%;
     }
 
-    /* ===== TREE (CSS connector technique) ===== */
+    /* TREE */
     .tree,
     .tree ul {
       list-style: none;
@@ -302,7 +295,6 @@
       position: relative;
     }
 
-    /* vertical line from a node down to its children's horizontal bar */
     .tree li>ul::before {
       content: '';
       position: absolute;
@@ -313,7 +305,6 @@
       height: 36px;
     }
 
-    /* horizontal connectors between siblings */
     .tree li {
       padding-top: 36px;
     }
@@ -370,7 +361,7 @@
       border-radius: 6px 0 0 0;
     }
 
-    /* ===== AVATARS (gender icons) ===== */
+    /* AVATARS */
     .avatars {
       display: flex;
       justify-content: center;
@@ -387,8 +378,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-      transition: transform .15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .18), inset 0 0 0 1px rgba(255, 255, 255, .4);
+      transition: transform .15s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
 
     .node:hover .avatar {
@@ -430,7 +424,62 @@
       background: linear-gradient(150deg, #233a2a, #16241b 80%);
     }
 
-    /* ===== NODE CARD ===== */
+    .avatar img.photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .avatar.uploading {
+      opacity: .55;
+      pointer-events: none;
+    }
+
+    .avatar.uploading::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, .6);
+      border-top-color: var(--gold);
+      animation: avatarSpin .8s linear infinite;
+    }
+
+    @keyframes avatarSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .avatar:not(.uploading)[data-has-photo="false"]:hover::before {
+      content: "📷";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: rgba(0, 0, 0, .4);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .avatar:not(.uploading)[data-has-photo="true"]:hover::before {
+      content: "🔍";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background: rgba(0, 0, 0, .35);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    /* NODE CARD */
     .node {
       position: relative;
       display: inline-flex;
@@ -444,11 +493,11 @@
       min-width: 158px;
       box-shadow: var(--shadow);
       cursor: default;
-      transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+      transition: box-shadow .18s, transform .18s, border-color .18s;
     }
 
     .node:hover {
-      box-shadow: 0 12px 26px rgba(22, 32, 25, 0.2);
+      box-shadow: 0 12px 26px rgba(22, 32, 25, .2);
       transform: translateY(-2px);
       border-color: var(--gold);
     }
@@ -475,11 +524,10 @@
       letter-spacing: .02em;
     }
 
-    /* root + gen1/gen2 get special emphasis */
     li[data-gen="1"] .node {
       background: var(--bark);
       border-color: var(--bark);
-      box-shadow: 0 10px 24px rgba(21, 32, 26, 0.35);
+      box-shadow: 0 10px 24px rgba(21, 32, 26, .35);
     }
 
     li[data-gen="1"] .node:hover {
@@ -493,13 +541,13 @@
     }
 
     li[data-gen="1"] .node .gen-tag {
-      background: rgba(219, 166, 70, 0.2);
+      background: rgba(219, 166, 70, .2);
       color: var(--gold-bright);
     }
 
     li[data-gen="2"] .node {
       border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(185, 135, 47, 0.12), var(--shadow);
+      box-shadow: 0 0 0 3px rgba(185, 135, 47, .12), var(--shadow);
     }
 
     .toggle-btn {
@@ -519,18 +567,13 @@
       justify-content: center;
       cursor: pointer;
       z-index: 5;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-      transition: background .15s ease, transform .15s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, .2);
+      transition: background .15s, transform .15s;
     }
 
     .toggle-btn:hover {
       background: var(--gold);
       transform: translateX(-50%) scale(1.08);
-    }
-
-    .toggle-btn:focus-visible {
-      outline: 3px solid var(--leaf-soft);
-      outline-offset: 2px;
     }
 
     .toggle-btn .bar {
@@ -551,7 +594,7 @@
       width: 2.4px;
       height: 11px;
       transform: translate(-50%, -50%) scaleY(1);
-      transition: transform .2s ease;
+      transition: transform .2s;
     }
 
     li:not(.collapsed) .toggle-btn .bar-v {
@@ -576,7 +619,164 @@
       font-weight: 700;
       border-radius: 999px;
       padding: 2px 6px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+    }
+
+    /* LIGHTBOX */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10, 15, 12, .88);
+      backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-overlay.open {
+      display: flex;
+    }
+
+    .lightbox-box {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 28px 24px 24px;
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, .55);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #ece7d6;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      transition: background .15s;
+    }
+
+    .lightbox-close:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    .lightbox-photo-wrap {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--gold-bright);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, .22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--leaf-pale);
+      flex-shrink: 0;
+    }
+
+    .lightbox-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lightbox-photo-wrap .icon-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      opacity: .35;
+    }
+
+    .lightbox-photo-wrap .icon-placeholder svg {
+      width: 80px;
+      height: 80px;
+      fill: var(--leaf);
+    }
+
+    .lightbox-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    .lightbox-gen {
+      font-size: 12px;
+      color: var(--ink-soft);
+      background: #efe5cb;
+      border-radius: 999px;
+      padding: 3px 12px;
+    }
+
+    .lightbox-status {
+      font-size: 13px;
+      color: var(--ink-soft);
+      min-height: 18px;
+      text-align: center;
+    }
+
+    .lightbox-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .lb-btn {
+      padding: 9px 18px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      transition: background .15s, color .15s, border-color .15s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lb-btn:hover {
+      background: var(--gold);
+      color: #fff;
+      border-color: var(--gold);
+    }
+
+    .lb-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .lb-btn.primary {
+      background: var(--leaf);
+      color: #fff;
+      border-color: var(--leaf);
+    }
+
+    .lb-btn.primary:hover {
+      background: var(--gold);
+      border-color: var(--gold);
     }
 
     footer {
@@ -593,7 +793,7 @@
       margin-bottom: 6px;
     }
 
-    @media (max-width:640px) {
+    @media(max-width:640px) {
       .canvas {
         padding: 30px 20px 70px;
       }
@@ -618,7 +818,7 @@
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
+    @media(prefers-reduced-motion:reduce) {
       * {
         transition: none !important;
       }
@@ -638,100 +838,10 @@
         </style>
         <g id="Layer 1">
           <g id="&lt;Group&gt;">
-            <path id="&lt;Path&gt;" class="s0"
+            <path class="s0"
               d="m1004.91 2000.67c26.5-62.95 54.05-145.92 65.95-238.51 26.18-203.64 0-353.45-114.91-414.54-114.91-61.09-349.09-13.09-395.63 37.82-46.54 50.91-97.45-91.64 123.63-112 0 0-55.27-36.37-141.08-30.55-85.82 5.82-200.72 13.1-156.37-42.17 44.36-55.28 244.36-29.83 315.64-11.65 0 0-103.99-29.81-186.9-114.17-82.91-84.37-33.46-113.46 53.81-55.28 87.28 58.18 177.46 136.73 264.73 151.27 0 0-98.91-56.73-146.91-142.54-48-85.82-32-141.09 82.91-36.37 114.91 104.73 132.36 154.19 248.73 152.73 116.35-1.46-49.45-113.46-104.73-181.82-55.26-68.36-34.9-126.54-10.18-171.63 0 0 74.2 106.17 136.74 143.99 62.54 37.82 222.56 187.62 228.38 577.43 2.66 178.55 7.77 352.19 12.52 487.99z" />
-            <path id="&lt;Path&gt;" class="s0"
+            <path class="s0"
               d="m1579.07 2000.67c-26.5-62.95-54.05-145.92-65.96-238.51-26.18-203.64 0-353.45 114.92-414.54 114.9-61.09 349.08-13.09 395.63 37.82 46.54 50.91 97.45-91.64-123.64-112 0 0 55.28-36.37 141.09-30.55 85.82 5.82 200.72 13.1 156.36-42.17-44.35-55.28-244.35-29.83-315.63-11.65 0 0 103.99-29.81 186.9-114.17 82.91-84.37 33.46-113.46-53.82-55.28-87.27 58.18-177.45 136.73-264.72 151.27 0 0 98.91-56.73 146.91-142.54 47.99-85.82 32-141.09-82.91-36.37-114.91 104.73-132.37 154.19-248.73 152.73-116.36-1.46 49.46-113.46 104.72-181.82 55.27-68.36 34.91-126.54 10.18-171.63 0 0-74.19 106.17-136.73 143.99-62.54 37.82-222.56 187.62-228.38 577.43-2.66 178.55-7.77 352.19-12.52 487.99z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m268.91 952.47c46.89-14.87 100.24-3.72 137.42 33.46 33.68 33.68 46 80.62 36.97 124.01l-108.4-91.48 91.48 108.4c-43.39 9.03-90.33-3.29-124.01-36.97-37.18-37.18-48.33-90.53-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m426.05 775.24c46.89-14.88 100.23-3.73 137.42 33.46 33.68 33.67 46 80.62 36.97 124l-108.4-91.47 91.47 108.4c-43.38 9.03-90.33-3.3-124-36.98-37.18-37.18-48.33-90.53-33.46-137.41z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m657.32 727.24c46.89-14.87 100.23-3.72 137.42 33.46 33.67 33.67 46 80.62 36.97 124l-108.4-91.47 91.47 108.4c-43.38 9.03-90.33-3.3-124-36.97-37.18-37.19-48.33-90.54-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m303.15 1471.75c46.88 14.87 100.23 3.72 137.41-33.46 33.68-33.68 46-80.62 36.98-124l-108.4 91.47 91.47-108.4c-43.39-9.03-90.33 3.29-124.01 36.97-37.18 37.18-48.33 90.54-33.45 137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m116.28 1231.65c22.63 43.67 68.24 73.51 120.82 73.51 47.63 0 89.54-24.48 113.83-61.54l-141.33-11.97 141.33-11.97c-24.29-37.06-66.2-61.54-113.83-61.54-52.58 0-98.19 29.84-120.82 73.51z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1107.83 606.52c-46.88-14.88-100.23-3.73-137.42 33.46-33.67 33.67-46 80.61-36.97 124l108.4-91.48-91.47 108.4c43.39 9.03 90.33-3.29 124-36.96 37.18-37.19 48.33-90.54 33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m118.95 1469.21c29.23 9.28 62.51 2.33 85.7-20.86 21-21 28.68-50.28 23.05-77.33l-67.6 57.04 57.04-67.6c-27.05-5.62-56.33 2.06-77.33 23.06-23.18 23.18-30.13 56.46-20.86 85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m95.61 991.75c29.24-9.27 62.51-2.32 85.69 20.87 21 21 28.69 50.27 23.06 77.33l-67.6-57.05 57.04 67.6c-27.05 5.63-56.33-2.05-77.33-23.05-23.18-23.19-30.14-56.46-20.86-85.7z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m230.88 772.12c29.24-9.28 62.51-2.33 85.7 20.86 21 21 28.68 50.27 23.05 77.33l-67.6-57.04 57.04 67.59c-27.05 5.64-56.32-2.05-77.33-23.05-23.18-23.19-30.13-56.46-20.86-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m466.76 612.27c29.24-9.28 62.51-2.32 85.69 20.86 21 21 28.69 50.28 23.06 77.33l-67.6-57.04 57.04 67.6c-27.05 5.63-56.33-2.06-77.33-23.06-23.18-23.18-30.14-56.45-20.86-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m793.04 505.5c43.15 9.48 79.64 42.11 91.87 87.73 11.07 41.32-0.43 83.37-26.93 113.06l-43.24-119.83 22.47 125.4c-37.8-12.47-68.78-43.13-79.85-84.45-12.23-45.62 3.06-92.13 35.68-121.91z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1038.38 479.91c-29.24-9.28-62.51-2.32-85.7 20.87-21 21-28.68 50.27-23.05 77.32l67.6-57.04-57.05 67.6c27.06 5.63 56.33-2.06 77.33-23.06 23.19-23.18 30.14-56.45 20.87-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m637.81 547.72c30.64-1.4 60.98 13.93 77.37 42.33 14.85 25.72 14.7 55.98 2.26 80.66l-50.53-72.59 37.6 80.06c-27.59-1.57-53.87-16.57-68.72-42.29-16.4-28.39-14.5-62.33 2.02-88.17z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m273.78 609.17c29.24-9.28 62.51-2.32 85.7 20.87 21 21 28.68 50.27 23.05 77.32l-67.6-57.04 57.05 67.6c-27.06 5.63-56.33-2.06-77.33-23.06-23.19-23.18-30.14-56.45-20.87-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1162.39 800.21c-29.23-9.28-62.5-2.32-85.69 20.87-21 21-28.69 50.27-23.05 77.33l67.59-57.05-57.04 67.6c27.06 5.63 56.33-2.06 77.33-23.06 23.19-23.18 30.14-56.45 20.86-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2315.08 952.47c-46.88-14.87-100.24-3.72-137.42 33.46-33.67 33.68-45.99 80.62-36.97 124.01l108.4-91.48-91.47 108.4c43.39 9.03 90.33-3.29 124-36.97 37.19-37.18 48.34-90.53 33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2157.94 775.24c-46.88-14.88-100.23-3.73-137.41 33.46-33.68 33.67-46 80.62-36.97 124l108.4-91.47-91.48 108.4c43.39 9.03 90.33-3.3 124.01-36.98 37.18-37.18 48.33-90.53 33.45-137.41z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1926.67 727.24c-46.88-14.87-100.23-3.72-137.41 33.46-33.68 33.67-46 80.62-36.97 124l108.4-91.47-91.48 108.4c43.39 9.03 90.33-3.3 124.01-36.97 37.18-37.19 48.33-90.54 33.45-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2280.85 1471.75c-46.89 14.87-100.24 3.72-137.42-33.46-33.67-33.68-46-80.62-36.97-124l108.4 91.47-91.48-108.4c43.39-9.03 90.34 3.29 124.01 36.97 37.18 37.18 48.33 90.54 33.46 137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2467.72 1231.65c-22.64 43.67-68.25 73.51-120.83 73.51-47.62 0-89.53-24.48-113.83-61.54l141.34-11.97-141.34-11.97c24.3-37.06 66.21-61.54 113.83-61.54 52.58 0 98.19 29.84 120.83 73.51z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1476.16 606.52c46.89-14.88 100.24-3.73 137.42 33.46 33.68 33.67 46 80.61 36.97 124l-108.4-91.48 91.47 108.4c-43.38 9.03-90.32-3.29-124-36.96-37.18-37.19-48.33-90.54-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2465.04 1469.21c-29.23 9.28-62.5 2.33-85.69-20.86-21-21-28.68-50.28-23.06-77.33l67.61 57.04-57.05-67.6c27.06-5.62 56.33 2.06 77.33 23.06 23.19 23.18 30.14 56.46 20.86 85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2488.38 991.75c-29.23-9.27-62.5-2.32-85.69 20.87-21 21-28.68 50.27-23.05 77.33l67.59-57.05-57.04 67.6c27.06 5.63 56.33-2.05 77.33-23.05 23.19-23.19 30.14-56.46 20.86-85.7z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2353.11 772.12c-29.24-9.28-62.5-2.33-85.69 20.86-21 21-28.68 50.27-23.06 77.33l67.6-57.04-57.04 67.59c27.05 5.64 56.33-2.05 77.33-23.05 23.19-23.19 30.14-56.46 20.86-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2117.24 612.27c-29.24-9.28-62.51-2.32-85.7 20.86-21 21-28.68 50.28-23.05 77.33l67.59-57.04-57.04 67.6c27.06 5.63 56.33-2.06 77.33-23.06 23.19-23.18 30.14-56.45 20.87-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1790.95 505.5c-43.15 9.48-79.64 42.11-91.86 87.73-11.07 41.32 0.42 83.37 26.92 113.06l43.25-119.83-22.47 125.4c37.8-12.47 68.78-43.13 79.85-84.45 12.22-45.62-3.07-92.13-35.69-121.91z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1545.62 479.91c29.23-9.28 62.51-2.32 85.69 20.87 21 21 28.69 50.27 23.06 77.32l-67.6-57.04 57.04 67.6c-27.06 5.63-56.33-2.06-77.33-23.06-23.19-23.18-30.14-56.45-20.86-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1946.18 547.72c-30.64-1.4-60.98 13.93-77.37 42.33-14.85 25.72-14.7 55.98-2.26 80.66l50.53-72.59-37.6 80.06c27.59-1.57 53.88-16.57 68.73-42.29 16.4-28.39 14.5-62.33-2.03-88.17z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2310.21 609.17c-29.23-9.28-62.51-2.32-85.69 20.87-21 21-28.69 50.27-23.06 77.32l67.6-57.04-57.04 67.6c27.06 5.63 56.33-2.06 77.33-23.06 23.19-23.18 30.14-56.45 20.86-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1421.6 800.21c29.24-9.28 62.51-2.32 85.69 20.87 21.01 21 28.69 50.27 23.06 77.33l-67.6-57.05 57.04 67.6c-27.05 5.63-56.32-2.06-77.32-23.06-23.19-23.18-30.15-56.45-20.87-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1388.01 907.72c-46.89-14.87-100.24-3.72-137.42 33.46-33.68 33.68-46 80.62-36.98 124l108.41-91.47-91.48 108.4c43.39 9.03 90.33-3.29 124.01-36.97 37.18-37.18 48.33-90.54 33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1182.27 660.37c46.89-14.87 100.24-3.72 137.42 33.46 33.68 33.68 46 80.62 36.98 124.01l-108.41-91.48 91.48 108.4c-43.39 9.03-90.33-3.29-124.01-36.97-37.18-37.18-48.33-90.53-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1483.1 446.52c-46.89-14.87-100.23-3.72-137.42 33.46-33.67 33.67-46 80.62-36.97 124l108.4-91.47-91.47 108.4c43.38 9.03 90.33-3.29 124-36.97 37.19-37.19 48.33-90.53 33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1080.2 370.85c46.88-14.87 100.23-3.72 137.42 33.46 33.67 33.68 45.99 80.62 36.96 124l-108.4-91.47 91.48 108.4c-43.39 9.03-90.33-3.29-124-36.97-37.19-37.18-48.33-90.53-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1373.21 273.93c-30.64-1.4-60.97 13.94-77.37 42.33-14.85 25.72-14.69 55.99-2.26 80.66l50.54-72.59-37.61 80.06c27.59-1.57 53.88-16.57 68.73-42.29 16.4-28.39 14.5-62.33-2.03-88.17z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m811.25 246.78c46.89-14.88 100.24-3.73 137.42 33.46 33.68 33.68 46 80.62 36.97 124l-108.4-91.47 91.48 108.4c-43.39 9.03-90.34-3.29-124.01-36.97-37.18-37.18-48.33-90.54-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1003.21 172.1c30.65-1.39 60.98 13.94 77.38 42.34 14.85 25.72 14.69 55.98 2.25 80.66l-50.53-72.6 37.6 80.06c-27.59-1.56-53.87-16.56-68.72-42.28-16.4-28.4-14.5-62.33 2.02-88.18z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m641.32 351.16c29.24-9.28 62.51-2.32 85.69 20.87 21 21 28.69 50.27 23.06 77.33l-67.6-57.05 57.05 67.6c-27.06 5.63-56.33-2.06-77.33-23.06-23.19-23.18-30.15-56.45-20.87-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1460.6 262.81c46.88-14.87 100.23-3.72 137.41 33.46 33.68 33.68 46 80.62 36.97 124.01l-108.4-91.48 91.48 108.4c-43.39 9.03-90.33-3.29-124-36.97-37.19-37.18-48.33-90.53-33.46-137.42z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1858.37 298.16c-46.88-14.88-100.23-3.73-137.41 33.45-33.69 33.68-46.01 80.62-36.98 124.01l108.4-91.48-91.47 108.41c43.38 9.02 90.33-3.3 124-36.98 37.19-37.18 48.33-90.53 33.46-137.41z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1738.03 132.99c-30.64-1.4-60.98 13.93-77.37 42.33-14.86 25.72-14.7 55.98-2.26 80.66l50.53-72.6-37.6 80.06c27.59-1.56 53.88-16.56 68.73-42.28 16.39-28.4 14.5-62.34-2.03-88.17z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1252.23 158.22c-30.65-1.39-60.98 13.94-77.38 42.33-14.85 25.72-14.69 55.99-2.25 80.66l50.53-72.59-37.61 80.06c27.59-1.57 53.88-16.57 68.73-42.29 16.4-28.39 14.5-62.33-2.02-88.17z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1329.03 105.19c30.64-1.39 60.98 13.94 77.37 42.34 14.85 25.72 14.7 55.98 2.26 80.66l-50.53-72.6 37.6 80.06c-27.59-1.56-53.88-16.56-68.73-42.28-16.39-28.4-14.5-62.34 2.03-88.18z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m2027.35 389.75c-29.24-9.28-62.51-2.32-85.69 20.86-21 21.01-28.69 50.28-23.06 77.33l67.6-57.04-57.04 67.6c27.05 5.63 56.32-2.06 77.32-23.06 23.19-23.18 30.15-56.45 20.87-85.69z" />
-            <path id="&lt;Path&gt;" class="s0"
-              d="m1913.72 125.94c48.04 10.56 88.66 46.89 102.27 97.68 12.33 46-0.47 92.82-29.98 125.88l-48.14-133.42 25.02 139.61c-42.09-13.87-76.58-48.02-88.91-94.02-13.61-50.79 3.41-102.57 39.74-135.73z" />
           </g>
         </g>
       </svg>
@@ -748,55 +858,36 @@
   </div>
 
   <div class="toolbar">
-    <button id="zoomOut" type="button" aria-label="చిన్నదిగా చేయండి">
-      <svg viewBox="0 0 24 24">
+    <button id="zoomOut" type="button" aria-label="చిన్నదిగా చేయండి"><svg viewBox="0 0 24 24">
         <path d="M19 13H5v-2h14v2z" />
-      </svg>
-    </button>
+      </svg></button>
     <span class="zoom-pct" id="zoomPct">100%</span>
-    <button id="zoomIn" type="button" aria-label="పెద్దదిగా చేయండి">
-      <svg viewBox="0 0 24 24">
+    <button id="zoomIn" type="button" aria-label="పెద్దదిగా చేయండి"><svg viewBox="0 0 24 24">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-      </svg>
-    </button>
-    <button id="zoomReset" type="button">
-      <svg viewBox="0 0 24 24">
+      </svg></button>
+    <button id="zoomReset" type="button"><svg viewBox="0 0 24 24">
         <path d="M17.65 6.35A8 8 0 1 0 19.94 14h-2.1A6 6 0 1 1 16 7.76V11h2V4h-7v2h3.65z" />
-      </svg>
-      రీసెట్
-    </button>
+      </svg>రీసెట్</button>
     <span class="sep"></span>
-    <button id="expandAll" type="button">
-      <svg viewBox="0 0 24 24">
+    <button id="expandAll" type="button"><svg viewBox="0 0 24 24">
         <path d="M19 13H5v-2h14v2zm0-6H5V5h14v2zm0 12H5v-2h14v2z" />
-      </svg>
-      అన్నీ తెరువు
-    </button>
-    <button id="collapseAll" type="button">
-      <svg viewBox="0 0 24 24">
+      </svg>అన్నీ తెరువు</button>
+    <button id="collapseAll" type="button"><svg viewBox="0 0 24 24">
         <path d="M12 2L6 8h12zM6 16l6 6 6-6z" />
-      </svg>
-      మూలానికి కుదించు
-    </button>
+      </svg>మూలానికి కుదించు</button>
   </div>
 
   <div class="legend">
     <div class="item"><span class="swatch root"></span> మూల పూర్వీకులు (1,2వ తరం)</div>
-    <div class="item">
-      <span class="avatar male legend-avatar"><svg viewBox="0 0 24 24">
+    <div class="item"><span class="avatar male legend-avatar"><svg viewBox="0 0 24 24">
           <circle cx="12" cy="8" r="4" />
           <path d="M4 21a8 8 0 0 1 16 0z" />
-        </svg></span>
-      పురుషుడు
-    </div>
-    <div class="item">
-      <span class="avatar female legend-avatar"><svg viewBox="0 0 24 24">
+        </svg></span>పురుషుడు</div>
+    <div class="item"><span class="avatar female legend-avatar"><svg viewBox="0 0 24 24">
           <circle cx="12" cy="7" r="4" />
           <path d="M12 11 6 21h12z" />
-        </svg></span>
-      మహిళ
-    </div>
-    <div class="item"><span class="swatch dashed"></span> శాఖ పేరు ఆధారంగా అంచనా వేసిన పూర్వీకుడు</div>
+        </svg></span>మహిళ</div>
+    <div class="item"><span class="swatch dashed"></span> అంచనా వేసిన పూర్వీకుడు</div>
   </div>
 
   <div class="canvas" id="canvas">
@@ -805,247 +896,298 @@
     </div>
   </div>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true">
+    <div class="lightbox-box" id="lightboxBox">
+      <button class="lightbox-close" id="lightboxClose" aria-label="మూసివేయండి">✕</button>
+      <div class="lightbox-photo-wrap" id="lbPhotoWrap"></div>
+      <div class="lightbox-name" id="lbName"></div>
+      <div class="lightbox-gen" id="lbGen"></div>
+      <div class="lightbox-status" id="lbStatus"></div>
+      <div class="lightbox-actions">
+        <button class="lb-btn primary" id="lbUploadBtn" type="button">📷 ఫోటో మార్చండి</button>
+        <button class="lb-btn" id="lbCloseBtn" type="button">మూసివేయండి</button>
+      </div>
+    </div>
+  </div>
+  <input type="file" id="hiddenFileInput" accept="image/*" style="display:none">
+
   <footer>
     <div class="root-line">🌳 బళ్ల వారి వంశం — తరతరాలకు కొనసాగుతున్న వారసత్వం</div>
-    <div>నోడ్ మీద ఉన్న వృత్తాకార బటన్‌ను నొక్కితే ఆ శాఖ తెరుచుకుంటుంది / మూసుకుంటుంది. &nbsp;(+ = మూసివేయబడింది, − =
-      తెరిచి ఉంది)</div>
+    <div>నోడ్ మీద ఉన్న వృత్తాకార బటన్‌ను నొక్కితే ఆ శాఖ తెరుచుకుంటుంది / మూసుకుంటుంది.</div>
+    <div style="margin-top:8px;">📷 అవతార్ ఐకాన్ క్లిక్ చేస్తే ఫోటో చూడవచ్చు / అప్‌లోడ్ చేయవచ్చు.</div>
   </footer>
 
   <script>
-    // ---------- ICONS ----------
     const ICON_MALE = '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0z"/></svg>';
     const ICON_FEMALE = '<svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M12 11 6 21h12z"/></svg>';
 
-    // ---------- DATA (parent → children, derived from the శాఖ headings) ----------
-    // each node: { people:[{n:"name", g:"m"|"f"}, ...], gen, children }
     const TREE = {
       people: [{ n: "శ్రీ బళ్ల వీరభద్రుడు", g: "m" }, { n: "శ్రీమతి అచ్చమ్మ", g: "f" }], gen: 1,
-      children: [
-        {
-          people: [{ n: "శ్రీ కనకరాజు", g: "m" }, { n: "శ్రీమతి చిట్టెమ్మ", g: "f" }], gen: 2,
-          children: [
-            {
-              people: [{ n: "శ్రీ మల్లయ్య", g: "m" }, { n: "శ్రీమతి రామలక్ష్మమ్మ", g: "f" }], gen: 3,
-              children: [
-                { people: [{ n: "శ్రీ సూర్యమల్లేశ్వరరావు", g: "m" }], gen: 4 },
-                {
-                  people: [{ n: "శ్రీ నీలకంఠేశ్వరరావు", g: "m" }, { n: "శ్రీమతి మహాలక్ష్మమ్మ", g: "f" }], gen: 4,
-                  children: [
-                    {
-                      people: [{ n: "శ్రీ మల్లేశ్వర ప్రసాద్", g: "m" }, { n: "శ్రీమతి సుజాత", g: "f" }], gen: 5,
-                      children: [
-                        {
-                          people: [{ n: "శ్రీ శివ సందీప్", g: "m" }, { n: "శ్రీమతి శ్రీదేవి రాజరాజేశ్వరి", g: "f" }], gen: 6,
-                          children: [{ people: [{ n: "శ్రీ సాయి వైష్ణవి", g: "f" }], gen: 7 }]
-                        },
-                        {
-                          people: [{ n: "శ్రీమతి ఉప్పుగంటి లక్ష్మీ స్రవంతి", g: "f" }, { n: "శ్రీ వినయ సత్య త్రినాథ్", g: "m" }], gen: 6,
-                          children: [{ people: [{ n: "జయవీర హర్షిత", g: "f" }], gen: 7 }, { people: [{ n: "జయవీర మీనాక్షి", g: "f" }], gen: 7 }]
-                        }
-                      ]
-                    },
-                    {
-                      people: [{ n: "శ్రీ బాబు నాగేంద్ర ప్రసాద్", g: "m" }, { n: "శ్రీమతి మహాలక్ష్మి", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "శ్రీ శశాంక్", g: "m" }, { n: "శ్రీమతి శిరీష", g: "f" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీమతి కొండపల్లి రామలక్ష్మి మల్లేశ్వరి", g: "f" }, { n: "శ్రీ బాలవీరభద్రరావు", g: "m" }], gen: 5,
-                      children: [{ people: [{ n: "శ్రీమతి ఉషా రాణి", g: "f" }, { n: "శ్రీ శివ", g: "m" }], gen: 6 }, { people: [{ n: "శ్రీమతి పుష్ప మంజూషా", g: "f" }, { n: "శ్రీ అశ్విన్", g: "m" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీమతి చింతా శారద", g: "f" }, { n: "శ్రీ తిరుమలరావు", g: "m" }], gen: 5,
-                      children: [{ people: [{ n: "శ్రీమతి బళ్ల శిరీష", g: "f" }, { n: "శ్రీ శశాంక్", g: "m" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీ నాగేంద్ర మెహర్‌బాబా", g: "m" }, { n: "శ్రీమతి మెహర్ వాణి", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "శ్రీ వత్స", g: "m" }], gen: 6 }]
-                    }
-                  ]
-                },
-                {
-                  people: [{ n: "శ్రీ బాలసుబ్రహ్మణ్యం", g: "m" }, { n: "శ్రీమతి వెంకట నరసమ్మ", g: "f" }], gen: 4,
-                  children: [
-                    {
-                      people: [{ n: "శ్రీ సాయి మల్లేశ్వర కుమార్", g: "m" }, { n: "శ్రీమతి రాజరాజేశ్వరి", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "ధనలక్ష్మి", g: "f" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీ మెహర్‌మూర్తి", g: "m" }, { n: "శ్రీమతి నాగరత్నం", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "శ్రీమతి ఆకాశపు  శ్రావణి ", g: "f" }, { n: "శ్రీ వీర వినయ కుమార్ ", g: "m" }], gen: 6 }, { people: [{ n: "శ్రీ మనోజ్ కుమార్", g: "m" }, { n: "శ్రీమతి భవ్యశ్రీ ", g: "f" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీ మెహర్ వీర వేంకట సత్యనారాయణ", g: "m" }, { n: "శ్రీమతి ఉమా మహేశ్వరి", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "మణి సాయి గణేష్", g: "m" }], gen: 6 }, { people: [{ n: "శ్రీవల్లి", g: "f" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీ మెహర్‌లక్ష్మీ నాగేశ్వరరావు", g: "m" }, { n: "శ్రీమతి పద్మబ్రమరాంబ", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "నాగదుర్గ హర్షిణి", g: "f" }], gen: 6 }, { people: [{ n: "బాలచంద్ర హార్దిక్", g: "m" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీమతి కామిశెట్టి  మెహర్ విజయలక్ష్మి మల్లిక", g: "f" }, { n: " శ్రీ జయరాం ", g: "m" }], gen: 5,
-                      children: [{ people: [{ n: "కేదార సాయి", g: "m" }], gen: 6 }]
-                    }
-                  ]
-                },
-                {
-                  people: [{ n: "శ్రీ కనకలింగేశ్వరరావు", g: "m" }, { n: "శ్రీమతి పుణ్యవతి", g: "f" }], gen: 4,
-                  children: [
-                    {
-                      people: [{ n: "శ్రీ సూర్య మల్లేశ్వర కుమార్", g: "m" }, { n: "శ్రీమతి పుష్ప", g: "f" }], gen: 5,
-                      children: [{ people: [{ n: "యశ్వంత్", g: "m" }], gen: 6 }]
-                    },
-                    {
-                      people: [{ n: "శ్రీమతి బేబీ", g: "f" }, { n: "శ్రీ కోటిలింగం", g: "m" }], gen: 5,
-                      children: [{ people: [{ n: "నాగార్జున", g: "m" }], gen: 6 }, { people: [{ n: "అనిరుధ్", g: "m" }], gen: 6 }]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              people: [{ n: "శ్రీ బవరయ్య", g: "m" }], gen: 3,
-              children: [
-                { people: [{ n: "శ్రీ మల్లేశ్వరరావు", g: "m" }, { n: "శ్రీమతి మల్లమ్మ", g: "f" }], gen: 4 },
-                {
-                  people: [{ n: "శ్రీ కనకరాజు", g: "m" }, { n: "శ్రీమతి చిట్టెమ్మ", g: "f" }], gen: 4,
-                  children: [
-                    { people: [{ n: "శ్రీమతి మల్లేశ్వరి", g: "f" }], gen: 5 }, { people: [{ n: "శ్రీమతి నాగమణి", g: "f" }], gen: 5 },
-                    { people: [{ n: "శ్రీమతి కుమారి", g: "f" }], gen: 5 }, { people: [{ n: "శ్రీ సత్యనారాయణ", g: "m" }], gen: 5 }
-                  ]
-                }
-              ]
-            },
-            {
-              people: [{ n: "శ్రీ వీరభద్రం", g: "m" }], gen: 3,
-              children: [{ people: [{ n: "శ్రీమతి మల్లేశ్వరి", g: "f" }], gen: 4 }]
-            },
-            { people: [{ n: "శ్రీమతి కోట కోటమ్మ", g: "f" }], gen: 3 },
-            { people: [{ n: "శ్రీమతి చింత అచ్చమ్మ", g: "f" }, { n: "శ్రీ చంద్రశేఖర్", g: "m" }], gen: 3 },
-            { people: [{ n: "శ్రీమతి కోట రత్తమ్మ", g: "f" }], gen: 3 }
-          ]
-        }
-      ]
+      children: [{
+        people: [{ n: "శ్రీ కనకరాజు", g: "m" }, { n: "శ్రీమతి చిట్టెమ్మ", g: "f" }], gen: 2,
+        children: [
+          {
+            people: [{ n: "శ్రీ మల్లయ్య", g: "m" }, { n: "శ్రీమతి రామలక్ష్మమ్మ", g: "f" }], gen: 3, children: [
+              { people: [{ n: "శ్రీ సూర్యమల్లేశ్వరరావు", g: "m" }], gen: 4 },
+              {
+                people: [{ n: "శ్రీ నీలకంఠేశ్వరరావు", g: "m" }, { n: "శ్రీమతి మహాలక్ష్మమ్మ", g: "f" }], gen: 4, children: [
+                  {
+                    people: [{ n: "శ్రీ మల్లేశ్వర ప్రసాద్", g: "m" }, { n: "శ్రీమతి సుజాత", g: "f" }], gen: 5, children: [
+                      { people: [{ n: "శ్రీ శివ సందీప్", g: "m" }, { n: "శ్రీమతి శ్రీదేవి రాజరాజేశ్వరి", g: "f" }], gen: 6, children: [{ people: [{ n: "శ్రీ సాయి వైష్ణవి", g: "f" }], gen: 7 }] },
+                      { people: [{ n: "శ్రీమతి ఉప్పుగంటి లక్ష్మీ స్రవంతి", g: "f" }, { n: "శ్రీ వినయ సత్య త్రినాథ్", g: "m" }], gen: 6, children: [{ people: [{ n: "జయవీర హర్షిత", g: "f" }], gen: 7 }, { people: [{ n: "జయవీర మీనాక్షి", g: "f" }], gen: 7 }] }
+                    ]
+                  },
+                  { people: [{ n: "శ్రీ బాబు నాగేంద్ర ప్రసాద్", g: "m" }, { n: "శ్రీమతి మహాలక్ష్మి", g: "f" }], gen: 5, children: [{ people: [{ n: "శ్రీ శశాంక్", g: "m" }, { n: "శ్రీమతి శిరీష", g: "f" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీమతి కొండపల్లి రామలక్ష్మి మల్లేశ్వరి", g: "f" }, { n: "శ్రీ బాలవీరభద్రరావు", g: "m" }], gen: 5, children: [{ people: [{ n: "శ్రీమతి ఉషా రాణి", g: "f" }, { n: "శ్రీ శివ", g: "m" }], gen: 6 }, { people: [{ n: "శ్రీమతి పుష్ప మంజూషా", g: "f" }, { n: "శ్రీ అశ్విన్", g: "m" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీమతి చింతా శారద", g: "f" }, { n: "శ్రీ తిరుమలరావు", g: "m" }], gen: 5, children: [{ people: [{ n: "శ్రీమతి బళ్ల శిరీష", g: "f" }, { n: "శ్రీ శశాంక్", g: "m" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీ నాగేంద్ర మెహర్‌బాబా", g: "m" }, { n: "శ్రీమతి మెహర్ వాణి", g: "f" }], gen: 5, children: [{ people: [{ n: "శ్రీ వత్స", g: "m" }], gen: 6 }] }
+                ]
+              },
+              {
+                people: [{ n: "శ్రీ బాలసుబ్రహ్మణ్యం", g: "m" }, { n: "శ్రీమతి వెంకట నరసమ్మ", g: "f" }], gen: 4, children: [
+                  { people: [{ n: "శ్రీ సాయి మల్లేశ్వర కుమార్", g: "m" }, { n: "శ్రీమతి రాజరాజేశ్వరి", g: "f" }], gen: 5, children: [{ people: [{ n: "ధనలక్ష్మి", g: "f" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీ మెహర్‌మూర్తి", g: "m" }, { n: "శ్రీమతి నాగరత్నం", g: "f" }], gen: 5, children: [{ people: [{ n: "శ్రీమతి ఆకాశపు శ్రావణి", g: "f" }, { n: "శ్రీ వీర వినయ కుమార్", g: "m" }], gen: 6 }, { people: [{ n: "శ్రీ మనోజ్ కుమార్", g: "m" }, { n: "శ్రీమతి భవ్యశ్రీ", g: "f" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీ మెహర్ వీర వేంకట సత్యనారాయణ", g: "m" }, { n: "శ్రీమతి ఉమా మహేశ్వరి", g: "f" }], gen: 5, children: [{ people: [{ n: "మణి సాయి గణేష్", g: "m" }], gen: 6 }, { people: [{ n: "శ్రీవల్లి", g: "f" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీ మెహర్‌లక్ష్మీ నాగేశ్వరరావు", g: "m" }, { n: "శ్రీమతి పద్మబ్రమరాంబ", g: "f" }], gen: 5, children: [{ people: [{ n: "నాగదుర్గ హర్షిణి", g: "f" }], gen: 6 }, { people: [{ n: "బాలచంద్ర హార్దిక్", g: "m" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీమతి కామిశెట్టి మెహర్ విజయలక్ష్మి మల్లిక", g: "f" }, { n: "శ్రీ జయరాం", g: "m" }], gen: 5, children: [{ people: [{ n: "కేదార సాయి", g: "m" }], gen: 6 }] }
+                ]
+              },
+              {
+                people: [{ n: "శ్రీ కనకలింగేశ్వరరావు", g: "m" }, { n: "శ్రీమతి పుణ్యవతి", g: "f" }], gen: 4, children: [
+                  { people: [{ n: "శ్రీ సూర్య మల్లేశ్వర కుమార్", g: "m" }, { n: "శ్రీమతి పుష్ప", g: "f" }], gen: 5, children: [{ people: [{ n: "యశ్వంత్", g: "m" }], gen: 6 }] },
+                  { people: [{ n: "శ్రీమతి బేబీ", g: "f" }, { n: "శ్రీ కోటిలింగం", g: "m" }], gen: 5, children: [{ people: [{ n: "నాగార్జున", g: "m" }], gen: 6 }, { people: [{ n: "అనిరుధ్", g: "m" }], gen: 6 }] }
+                ]
+              }
+            ]
+          },
+          {
+            people: [{ n: "శ్రీ బవరయ్య", g: "m" }], gen: 3, children: [
+              { people: [{ n: "శ్రీ మల్లేశ్వరరావు", g: "m" }, { n: "శ్రీమతి మల్లమ్మ", g: "f" }], gen: 4 },
+              {
+                people: [{ n: "శ్రీ కనకరాజు", g: "m" }, { n: "శ్రీమతి చిట్టెమ్మ", g: "f" }], gen: 4, children: [
+                  { people: [{ n: "శ్రీమతి మల్లేశ్వరి", g: "f" }], gen: 5 }, { people: [{ n: "శ్రీమతి నాగమణి", g: "f" }], gen: 5 },
+                  { people: [{ n: "శ్రీమతి కుమారి", g: "f" }], gen: 5 }, { people: [{ n: "శ్రీ సత్యనారాయణ", g: "m" }], gen: 5 }
+                ]
+              }
+            ]
+          },
+          { people: [{ n: "శ్రీ వీరభద్రం", g: "m" }], gen: 3, children: [{ people: [{ n: "శ్రీమతి మల్లేశ్వరి", g: "f" }], gen: 4 }] },
+          { people: [{ n: "శ్రీమతి కోట కోటమ్మ", g: "f" }], gen: 3 },
+          { people: [{ n: "శ్రీమతి చింత అచ్చమ్మ", g: "f" }, { n: "శ్రీ చంద్రశేఖర్", g: "m" }], gen: 3 },
+          { people: [{ n: "శ్రీమతి కోట రత్తమ్మ", g: "f" }], gen: 3 }
+        ]
+      }]
     };
 
     const GEN_LABEL = { 1: "1వ తరం", 2: "2వ తరం", 3: "3వ తరం", 4: "4వ తరం", 5: "5వ తరం", 6: "6వ తరం", 7: "7వ తరం" };
 
     let memberCount = 0, branchCount = 0;
-    function countAll(node) {
-      memberCount += node.people.length;
-      if (node.children && node.children.length) {
-        branchCount++;
-        node.children.forEach(c => countAll(c));
-      }
-    }
+    function countAll(n) { memberCount += n.people.length; if (n.children && n.children.length) { branchCount++; n.children.forEach(c => countAll(c)); } }
     countAll(TREE);
     document.getElementById('memberCount').textContent = memberCount;
     document.getElementById('branchCount').textContent = branchCount;
 
     function avatarsHTML(people) {
-      return '<div class="avatars">' +
-        people.map(p => `<span class="avatar ${p.g === 'm' ? 'male' : 'female'}">${p.g === 'm' ? ICON_MALE : ICON_FEMALE}</span>`).join('') +
-        '</div>';
+      return '<div class="avatars">' + people.map(p => `<span class="avatar ${p.g === 'm' ? 'male' : 'female'}" data-has-photo="false">${p.g === 'm' ? ICON_MALE : ICON_FEMALE}</span>`).join('') + '</div>';
     }
 
     function renderNode(node) {
       const hasChildren = node.children && node.children.length;
       const li = document.createElement('li');
       li.dataset.gen = node.gen;
-      if (hasChildren && node.gen >= 4) li.classList.add('collapsed'); // collapse gen4+ by default
-
-      const name = node.people.map(p => p.n).join(' & ');
-
+      if (hasChildren && node.gen >= 4) li.classList.add('collapsed');
       const nodeEl = document.createElement('div');
       nodeEl.className = 'node' + (node.inferred ? ' inferred' : '');
-      nodeEl.innerHTML = `
-      ${avatarsHTML(node.people)}
-      <span class="name">${name}</span>
-      <span class="gen-tag">${GEN_LABEL[node.gen] || ''}</span>
-    `;
+      nodeEl.innerHTML = `${avatarsHTML(node.people)}<span class="name">${node.people.map(p => p.n).join(' & ')}</span><span class="gen-tag">${GEN_LABEL[node.gen] || ''}</span>`;
       if (hasChildren) {
         const toggle = document.createElement('button');
-        toggle.className = 'toggle-btn';
-        toggle.type = 'button';
+        toggle.className = 'toggle-btn'; toggle.type = 'button';
         toggle.setAttribute('aria-label', 'శాఖ తెరువు/మూసివేయు');
         toggle.setAttribute('aria-expanded', li.classList.contains('collapsed') ? 'false' : 'true');
         toggle.innerHTML = '<span class="bar bar-h"></span><span class="bar bar-v"></span>';
-        toggle.addEventListener('click', (e) => {
-          e.stopPropagation();
-          li.classList.toggle('collapsed');
-          toggle.setAttribute('aria-expanded', li.classList.contains('collapsed') ? 'false' : 'true');
-        });
+        toggle.addEventListener('click', e => { e.stopPropagation(); li.classList.toggle('collapsed'); toggle.setAttribute('aria-expanded', li.classList.contains('collapsed') ? 'false' : 'true'); });
         nodeEl.appendChild(toggle);
-
-        const badge = document.createElement('span');
-        badge.className = 'child-count';
-        badge.textContent = node.children.length;
-        nodeEl.appendChild(badge);
+        const badge = document.createElement('span'); badge.className = 'child-count'; badge.textContent = node.children.length; nodeEl.appendChild(badge);
       }
       li.appendChild(nodeEl);
-
-      if (hasChildren) {
-        const ul = document.createElement('ul');
-        node.children.forEach(child => ul.appendChild(renderNode(child)));
-        li.appendChild(ul);
-      }
+      if (hasChildren) { const ul = document.createElement('ul'); node.children.forEach(c => ul.appendChild(renderNode(c))); li.appendChild(ul); }
       return li;
     }
-
     document.getElementById('treeRoot').appendChild(renderNode(TREE));
 
-    // ---------- Expand / Collapse all ----------
-    document.getElementById('expandAll').addEventListener('click', () => {
-      document.querySelectorAll('#treeRoot li.collapsed').forEach(li => {
-        li.classList.remove('collapsed');
-        const btn = li.querySelector(':scope > .node > .toggle-btn');
-        if (btn) btn.setAttribute('aria-expanded', 'true');
-      });
-    });
-    document.getElementById('collapseAll').addEventListener('click', () => {
-      document.querySelectorAll('#treeRoot li').forEach(li => {
-        if (parseInt(li.dataset.gen, 10) >= 4 && li.querySelector(':scope > ul')) {
-          li.classList.add('collapsed');
-          const btn = li.querySelector(':scope > .node > .toggle-btn');
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-        }
-      });
-    });
+    document.getElementById('expandAll').addEventListener('click', () => { document.querySelectorAll('#treeRoot li.collapsed').forEach(li => { li.classList.remove('collapsed'); const b = li.querySelector(':scope > .node > .toggle-btn'); if (b) b.setAttribute('aria-expanded', 'true'); }); });
+    document.getElementById('collapseAll').addEventListener('click', () => { document.querySelectorAll('#treeRoot li').forEach(li => { if (parseInt(li.dataset.gen, 10) >= 4 && li.querySelector(':scope > ul')) { li.classList.add('collapsed'); const b = li.querySelector(':scope > .node > .toggle-btn'); if (b) b.setAttribute('aria-expanded', 'false'); } }); });
 
-    // ---------- Zoom ----------
     let zoom = 1;
-    const pane = document.getElementById('zoomPane');
-    const pct = document.getElementById('zoomPct');
-    function applyZoom() {
-      pane.style.transform = `scale(${zoom})`;
-      pct.textContent = Math.round(zoom * 100) + '%';
-    }
+    const pane = document.getElementById('zoomPane'), pct = document.getElementById('zoomPct');
+    function applyZoom() { pane.style.transform = `scale(${zoom})`; pct.textContent = Math.round(zoom * 100) + '%'; }
     document.getElementById('zoomIn').addEventListener('click', () => { zoom = Math.min(1.6, zoom + 0.1); applyZoom(); });
     document.getElementById('zoomOut').addEventListener('click', () => { zoom = Math.max(0.4, zoom - 0.1); applyZoom(); });
     document.getElementById('zoomReset').addEventListener('click', () => { zoom = 1; applyZoom(); });
 
-    // ---------- Drag to pan ----------
     const canvas = document.getElementById('canvas');
     let isDown = false, startX, startY, scrollLeft, scrollTop;
-    canvas.addEventListener('mousedown', (e) => {
-      isDown = true;
-      canvas.classList.add('grabbing');
-      startX = e.pageX; startY = e.pageY;
-      scrollLeft = canvas.scrollLeft; scrollTop = canvas.scrollTop;
-    });
+    canvas.addEventListener('mousedown', e => { isDown = true; canvas.classList.add('grabbing'); startX = e.pageX; startY = e.pageY; scrollLeft = canvas.scrollLeft; scrollTop = canvas.scrollTop; });
     window.addEventListener('mouseup', () => { isDown = false; canvas.classList.remove('grabbing'); });
-    window.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      canvas.scrollLeft = scrollLeft - (e.pageX - startX);
-      canvas.scrollTop = scrollTop - (e.pageY - startY);
-    });
+    window.addEventListener('mousemove', e => { if (!isDown) return; e.preventDefault(); canvas.scrollLeft = scrollLeft - (e.pageX - startX); canvas.scrollTop = scrollTop - (e.pageY - startY); });
+    window.addEventListener('load', () => { canvas.scrollLeft = (canvas.scrollWidth - canvas.clientWidth) / 2; });
 
-    // center the scroll horizontally on load
-    window.addEventListener('load', () => {
-      canvas.scrollLeft = (canvas.scrollWidth - canvas.clientWidth) / 2;
-    });
+    // =====================================================================
+    // PHOTO SYSTEM
+    //   - Reading photos/manifest: direct public fetch to raw.githubusercontent.com.
+    //     No token needed — your repo is public, so this is safe to do from the browser.
+    //   - Uploading photos: sent to a Cloudflare Worker, which holds the GitHub
+    //     token as a server-side secret and performs the actual commit.
+    //     The token NEVER appears in this file or in the browser.
+    // =====================================================================
+    (function () {
+      const GH_OWNER = "sandeepsrisiva123";
+      const GH_REPO = "balla-vamsa-vruksham";
+      const GH_BRANCH = "main";
+      const MANIFEST = "assets/photos.json";
+
+      // ⚠️ After deploying the Worker, replace this with your actual Worker URL.
+      const UPLOAD_WORKER_URL = "https://photo-upload.colors4life.workers.dev";
+
+      // Public, unauthenticated fetch — works because the repo is public.
+      function rawUrl(path) {
+        return `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/${GH_BRANCH}/${path}?t=${Date.now()}`;
+      }
+
+      async function readManifest() {
+        try {
+          const res = await fetch(rawUrl(MANIFEST));
+          if (res.ok) return await res.json();
+        } catch (e) { }
+        return {};
+      }
+
+      function fileToBase64(file) {
+        return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = rej; r.readAsDataURL(file); });
+      }
+
+      // Sends the photo to the Worker. The Worker holds the GitHub token and
+      // does the actual commit + manifest update server-side.
+      async function uploadPhoto(idx, file) {
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const contentBase64 = await fileToBase64(file);
+        const res = await fetch(UPLOAD_WORKER_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ idx, ext, contentBase64 })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) throw new Error(data.error || `Upload failed (${res.status})`);
+        return data.path;
+      }
+
+      function setAvatarPhoto(av, src) {
+        av.innerHTML = `<img class="photo" src="${src}" alt="">`;
+        av.dataset.hasPhoto = "true";
+        av.dataset.photoSrc = src;
+      }
+
+      // ---- LIGHTBOX ----
+      const overlay = document.getElementById('lightboxOverlay');
+      const lbPhotoWrap = document.getElementById('lbPhotoWrap');
+      const lbName = document.getElementById('lbName');
+      const lbGen = document.getElementById('lbGen');
+      const lbStatus = document.getElementById('lbStatus');
+      const lbUploadBtn = document.getElementById('lbUploadBtn');
+      const fileInput = document.getElementById('hiddenFileInput');
+      let currentAvatar = null;
+
+      function openLightbox(av) {
+        currentAvatar = av;
+        const src = av.dataset.photoSrc;
+        if (src) {
+          lbPhotoWrap.innerHTML = `<img src="${src}" alt="ఫోటో">`;
+        } else {
+          const isMale = av.classList.contains('male');
+          lbPhotoWrap.innerHTML = `<div class="icon-placeholder">${isMale ? ICON_MALE : ICON_FEMALE}</div>`;
+        }
+        const nodeEl = av.closest('.node');
+        const allAvs = nodeEl ? [...nodeEl.querySelectorAll('.avatar')] : [];
+        const pos = allAvs.indexOf(av);
+        const names = nodeEl ? nodeEl.querySelector('.name').textContent.split(' & ') : [];
+        lbName.textContent = names[pos] || names[0] || '';
+        lbGen.textContent = nodeEl ? nodeEl.querySelector('.gen-tag').textContent : '';
+        lbStatus.textContent = '';
+        lbUploadBtn.textContent = '📷 ఫోటో మార్చండి';
+        lbUploadBtn.disabled = false;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        currentAvatar = null;
+      }
+
+      document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+      document.getElementById('lbCloseBtn').addEventListener('click', closeLightbox);
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeLightbox(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+      lbUploadBtn.addEventListener('click', () => fileInput.click());
+
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files[0];
+        if (!file || !currentAvatar) return;
+        const av = currentAvatar;
+        const idx = av.dataset.avatarIdx;
+        lbUploadBtn.textContent = '⏳ అప్‌లోడ్ అవుతోంది...';
+        lbUploadBtn.disabled = true;
+        lbStatus.textContent = '';
+        try {
+          const path = await uploadPhoto(idx, file);
+          const blobUrl = URL.createObjectURL(file);
+          setAvatarPhoto(av, blobUrl);
+          lbPhotoWrap.innerHTML = `<img src="${blobUrl}" alt="ఫోటో">`;
+          lbStatus.textContent = '✅ విజయవంతంగా అప్‌లోడ్ అయింది!';
+          lbUploadBtn.textContent = '📷 ఫోటో మార్చండి';
+          lbUploadBtn.disabled = false;
+        } catch (err) {
+          console.error(err);
+          lbStatus.textContent = '❌ విఫలమైంది: ' + err.message;
+          lbUploadBtn.textContent = '📷 మళ్ళీ ప్రయత్నించండి';
+          lbUploadBtn.disabled = false;
+        }
+        fileInput.value = '';
+      });
+
+      // ---- ATTACH AVATAR CLICK HANDLERS ----
+      function attachHandlers() {
+        document.querySelectorAll('#treeRoot .avatar').forEach((av, idx) => {
+          av.dataset.avatarIdx = idx;
+          av.dataset.hasPhoto = 'false';
+          av.addEventListener('click', e => { e.stopPropagation(); openLightbox(av); });
+        });
+      }
+
+      // ---- LOAD EXISTING PHOTOS (public fetch, no token needed) ----
+      async function loadExistingPhotos() {
+        try {
+          const manifest = await readManifest();
+          const avatars = document.querySelectorAll('#treeRoot .avatar');
+          for (const [idx, path] of Object.entries(manifest)) {
+            const av = avatars[idx];
+            if (!av) continue;
+            const imgUrl = rawUrl(path);
+            const img = new Image();
+            img.onload = () => setAvatarPhoto(av, imgUrl);
+            img.onerror = () => console.warn(`Photo not found for avatar ${idx}: ${path}`);
+            img.src = imgUrl;
+          }
+        } catch (e) { console.warn('Could not load photos:', e); }
+      }
+
+      attachHandlers();
+      loadExistingPhotos();
+    })();
   </script>
-
 </body>
 
 </html>
