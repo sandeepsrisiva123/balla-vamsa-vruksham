@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>బళ్ల వారి వంశ వృక్షం</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu:wght@500;600;700;800&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top:#dce9d6;
+    --sky-bottom:#f3efdc;
+    --bark:#5c3a22;
+    --bark-deep:#3f2715;
+    --leaf-green:#4a7956;
+    --leaf-bright:#6fa56f;
+    --card:#fffbf1;
+    --gold:#b9872f;
+    --gold-bright:#dba646;
+    --maroon:#7a3328;
+    --ink:#2a241a;
+    --ink-soft:#6a6151;
+    --line:#e4d8b8;
+    --shadow: 0 6px 16px rgba(40,30,15,0.18);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--sky-bottom);
+    color:var(--ink);
+    font-family:'Noto Sans Telugu','Noto Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Noto Serif Telugu','Noto Serif',serif;}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    background:radial-gradient(120% 140% at 50% 0%, #2c4a33 0%, var(--bark-deep) 55%, #2a1c10 100%);
+    color:#f3ede0;
+    padding:50px 24px 58px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(219,166,70,0.14), transparent 40%),
+      radial-gradient(circle at 85% 10%, rgba(111,165,111,0.14), transparent 45%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    letter-spacing:.18em; font-size:12.5px; color:var(--gold-bright);
+    text-transform:uppercase; font-weight:600; margin-bottom:12px;
+    position:relative; z-index:1;
+  }
+  .hero h1{
+    font-size:clamp(26px,5vw,44px); margin:0 0 8px; font-weight:700;
+    position:relative; z-index:1; line-height:1.3;
+  }
+  .hero p.tag{
+    color:#d9d3c2; font-size:clamp(13px,1.6vw,16px); max-width:560px;
+    margin:0 auto; position:relative; z-index:1;
+  }
+  .stats{
+    display:flex; justify-content:center; gap:clamp(14px,5vw,42px);
+    margin-top:20px; position:relative; z-index:1; flex-wrap:wrap;
+  }
+  .stat b{ display:block; font-family:'Noto Serif Telugu',serif; font-size:22px; color:var(--gold-bright); }
+  .stat span{ font-size:11.5px; color:#c4c0ad; letter-spacing:.03em; }
+
+  /* ===== TOOLBAR ===== */
+  .toolbar{
+    position:sticky; top:0; z-index:30;
+    background:rgba(247,242,222,0.94);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    padding:9px 16px;
+    display:flex; align-items:center; justify-content:center;
+    gap:8px; flex-wrap:wrap;
+  }
+  .toolbar button{
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--ink);
+    padding:7px 14px;
+    border-radius:999px;
+    font-family:inherit; font-size:13px; font-weight:600;
+    cursor:pointer;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    transition:transform .15s ease, background .15s ease, color .15s ease;
+  }
+  .toolbar button:hover{ transform:translateY(-1px); background:var(--gold); color:#fff; border-color:var(--gold); }
+  .toolbar button:focus-visible{ outline:3px solid var(--leaf-bright); outline-offset:2px; }
+  .toolbar .sep{ width:1px; height:20px; background:var(--line); margin:0 4px; }
+  .zoom-pct{ font-size:12.5px; color:var(--ink-soft); min-width:40px; text-align:center; }
+
+  .legend{
+    max-width:760px; margin:0 auto; padding:14px 20px 0;
+    display:flex; gap:20px; flex-wrap:wrap; justify-content:center;
+    font-size:12px; color:var(--ink-soft);
+  }
+  .legend .item{ display:flex; align-items:center; gap:6px; }
+  .legend .ic{ font-size:15px; }
+
+  /* ===== CANVAS ===== */
+  .canvas{
+    overflow:auto;
+    background:linear-gradient(to bottom, var(--sky-top) 0%, var(--sky-bottom) 65%, var(--sky-bottom) 100%);
+    padding:30px;
+    cursor:grab;
+  }
+  .canvas.grabbing{ cursor:grabbing; }
+  .zoom-pane{
+    transform-origin: top center;
+    display:inline-block;
+    position:relative;
+  }
+  .art-wrap{ position:relative; }
+  .art-wrap svg{ position:absolute; top:0; left:0; display:block; }
+  .label-layer{ position:absolute; top:0; left:0; }
+
+  /* ===== LEAF LABEL ===== */
+  .leaf-label{
+    position:absolute;
+    transform:translate(-50%,-50%);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--card);
+    border:1.5px solid var(--line);
+    border-radius:16px 16px 16px 5px;
+    padding:7px 14px 7px 10px;
+    box-shadow:var(--shadow);
+    white-space:nowrap;
+    z-index:3;
+  }
+  .leaf-label .ic{ font-size:15px; line-height:1; flex-shrink:0; }
+  .leaf-label .name{ font-size:12.5px; font-weight:700; color:var(--ink); line-height:1.28; white-space:nowrap; }
+
+  .leaf-label.root{
+    background:linear-gradient(160deg, var(--bark) 0%, var(--bark-deep) 100%);
+    border-color:var(--bark-deep);
+    border-radius:14px;
+    padding:13px 22px;
+    z-index:4;
+  }
+  .leaf-label.root .ic{ font-size:24px; }
+  .leaf-label.root .name{ color:#f6efe0; font-family:'Noto Serif Telugu',serif; font-size:16px; }
+
+  .leaf-label.gen2{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(185,135,47,0.14), var(--shadow); }
+
+  .toggle-btn{
+    position:absolute; bottom:-11px; left:50%; transform:translateX(-50%);
+    width:22px; height:22px; border-radius:50%;
+    background:var(--leaf-green); color:#fff;
+    border:2px solid var(--sky-bottom);
+    font-size:12px; font-weight:700; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:5;
+    box-shadow:0 3px 8px rgba(0,0,0,0.2);
+  }
+  .toggle-btn:hover{ background:var(--gold); }
+  .toggle-btn:focus-visible{ outline:3px solid var(--leaf-bright); outline-offset:2px; }
+
+  .child-count{
+    position:absolute; top:-8px; right:-8px;
+    background:var(--maroon); color:#fff;
+    font-size:9px; font-weight:700;
+    border-radius:999px; padding:2px 5px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.25);
+    z-index:6;
+  }
+
+  footer{
+    text-align:center; padding:28px 20px 52px; color:var(--ink-soft); font-size:12.5px;
+  }
+  footer .root-line{ font-family:'Noto Serif Telugu',serif; font-size:14.5px; color:var(--bark); margin-bottom:6px; }
+
+  @media (max-width:640px){
+    .canvas{ padding:18px; }
+    .leaf-label{ padding:6px 10px 6px 8px; }
+    .leaf-label .name{ font-size:11.5px; }
+  }
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="eyebrow">వంశ చరిత్ర &nbsp;•&nbsp; ఏడు తరాలు</div>
+  <h1 class="display">బళ్ల వారి వంశ వృక్షం</h1>
+  <p class="tag">శ్రీ బళ్ల వీరభద్రుడు, శ్రీమతి అచ్చమ్మ గారి వేరు నుండి మొదలై విస్తరించిన మన కుటుంబం — ప్రతి కొమ్మ ఒక తరం, ప్రతి ఆకు ఒక పేరు.</p>
+  <div class="stats">
+    <div class="stat"><b id="memberCount">0</b><span>సభ్యులు</span></div>
+    <div class="stat"><b>7</b><span>తరాలు</span></div>
+    <div class="stat"><b id="branchCount">0</b><span>శాఖలు</span></div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <button id="zoomOut" type="button" aria-label="చిన్నదిగా చేయండి">−</button>
+  <span class="zoom-pct" id="zoomPct">100%</span>
+  <button id="zoomIn" type="button" aria-label="పెద్దదిగా చేయండి">+</button>
+  <button id="zoomReset" type="button">రీసెట్</button>
+  <span class="sep"></span>
+  <button id="expandAll" type="button">అన్నీ తెరువు</button>
+  <button id="collapseAll" type="button">మూలానికి కుదించు</button>
+</div>
+
+<div class="legend">
+  <div class="item"><span class="ic">🌳</span> మూల పూర్వీకులు</div>
+  <div class="item"><span class="ic">🌿</span> సంతానం ఉన్న కొమ్మ</div>
+  <div class="item"><span class="ic">🍃</span> చివరి తరం ఆకు</div>
+</div>
+
+<div class="canvas" id="canvas">
+  <div class="zoom-pane" id="zoomPane">
+    <div class="art-wrap" id="artWrap"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="root-line">🌳 బళ్ల వారి వంశం — తరం తరానికి కొనసాగుతున్న వారసత్వం</div>
+  <div>ఆకు కింద ఉన్న వృత్తాకార బటన్‌ను నొక్కితే ఆ కొమ్మ విచ్చుకుంటుంది / ముడుచుకుంటుంది.</div>
+</footer>
+
+<script>
+  // ---------- DATA ----------
+  const TREE = {
+    name: "శ్రీ బళ్ల వీరభద్రుడు & శ్రీమతి అచ్చమ్మ", gen: 1,
+    children: [
+      { name: "శ్రీ బళ్ల కనకరాజు & శ్రీమతి చిట్టిమ్మ", gen: 2,
+        children: [
+          { name: "మల్లయ్య & రామలక్ష్మమ్మ", gen: 3,
+            children: [
+              { name: "సూర్యమల్లేశ్వరరావు", gen: 4 },
+              { name: "నీలకంఠేశ్వరరావు & మహాలక్ష్మమ్మ", gen: 4,
+                children: [
+                  { name: "మల్లేశ్వర ప్రసాద్ & సుజాత", gen: 5,
+                    children: [
+                      { name: "శ్రీ శివ సందీప్ & శ్రీదేవి రాజరాజేశ్వరి", gen: 6,
+                        children: [ { name: "శ్రీ సాయి వైష్ణవి", gen: 7 } ] },
+                      { name: "లక్ష్మీ స్రవంతి & వినయ సత్య త్రినాథ్", gen: 6,
+                        children: [ { name: "జయవీర హర్షిత", gen: 7 }, { name: "జయవీర మీనాక్షి", gen: 7 } ] }
+                    ] },
+                  { name: "బాబు నాగేంద్ర ప్రసాద్ & మహాలక్ష్మి", gen: 5,
+                    children: [ { name: "శశాంక్ & శిరీష", gen: 6 } ] },
+                  { name: "రామలక్ష్మి మల్లేశ్వరి & బాలవీరభద్రరావు", gen: 5,
+                    children: [ { name: "ఉషా రాణి (మున్ని)", gen: 6 }, { name: "పుష్ప మంజూషా", gen: 6 } ] },
+                  { name: "శారద & తిరుమలరావు", gen: 5,
+                    children: [ { name: "శిరీష & శశాంక్", gen: 6 } ] },
+                  { name: "నాగేంద్ర మెహర్‌బాబా & మెహర్ వాణి", gen: 5,
+                    children: [ { name: "శ్రీ వత్స", gen: 6 } ] }
+                ] },
+              { name: "బాలసుబ్రహ్మణ్యం & వెంకట నరసమ్మ", gen: 4,
+                children: [
+                  { name: "సాయి మల్లేశ్వర కుమార్ & రాజరాజేశ్వరి", gen: 5,
+                    children: [ { name: "ధనలక్ష్మి", gen: 6 } ] },
+                  { name: "మెహర్‌మూర్తి & నాగరత్నం", gen: 5,
+                    children: [ { name: "శ్రావణి", gen: 6 }, { name: "మనోజ్ కుమార్", gen: 6 } ] },
+                  { name: "మెహర్ సత్యనారాయణ & ఉమా మహేశ్వరి", gen: 5,
+                    children: [ { name: "మణి సాయి గణేష్", gen: 6 }, { name: "శ్రీవల్లి", gen: 6 } ] },
+                  { name: "మెహర్‌లక్ష్మీ నాగేశ్వరరావు & పద్మబ్రమరాంబ", gen: 5,
+                    children: [ { name: "నాగదుర్గ హర్షిణి", gen: 6 }, { name: "బాలచంద్ర హార్దిక్", gen: 6 } ] },
+                  { name: "మెహర్ సాయి మల్లిక", gen: 5 }
+                ] },
+              { name: "కనకలింగేశ్వరరావు & పుణ్యవతి", gen: 4,
+                children: [
+                  { name: "సూర్య మల్లేశ్వర కుమార్ & పుష్ప", gen: 5,
+                    children: [ { name: "యశ్వంత్", gen: 6 } ] },
+                  { name: "బేబీ & కోటిలింగం", gen: 5,
+                    children: [ { name: "నాగార్జున", gen: 6 }, { name: "అనిరుధ్", gen: 6 } ] }
+                ] }
+            ] },
+          { name: "బవరయ్య", gen: 3,
+            children: [
+              { name: "మల్లేశ్వరరావు & మల్లమ్మ", gen: 4 },
+              { name: "కనకరాజు & చిట్టెమ్మ", gen: 4,
+                children: [
+                  { name: "మల్లేశ్వరి", gen: 5 }, { name: "నాగమణి", gen: 5 },
+                  { name: "కుమారి", gen: 5 }, { name: "సత్యనారాయణ", gen: 5 }
+                ] }
+            ] },
+          { name: "వీరభద్రం", gen: 3,
+            children: [ { name: "మల్లేశ్వరి", gen: 4 } ] },
+          { name: "కోట కోటమ్మ", gen: 3 },
+          { name: "చింత అచ్చమ్మ & చంద్రశేఖర్", gen: 3 },
+          { name: "కోట రత్తమ్మ", gen: 3 }
+        ] }
+    ]
+  };
+
+  const MAXGEN = 7;
+  const GAP_X = 340;
+  const LEVEL_Y = 175;
+  const MARGIN_X = 200;
+  const MARGIN_TOP = 60;
+  const TRUNK_EXTRA = 90; // extra space below root for trunk + ground
+
+  const EDGE_STYLE = {
+    2:{color:'#5c3a22', width:16},
+    3:{color:'#6e4c29', width:12},
+    4:{color:'#74712f', width:8.5},
+    5:{color:'#5c8a4f', width:6},
+    6:{color:'#4a7956', width:4},
+    7:{color:'#3f6b4a', width:2.6}
+  };
+
+  // ---------- default collapsed state ----------
+  (function setDefaults(node){
+    if (node.children && node.children.length){
+      node.collapsed = node.gen >= 4;
+      node.children.forEach(setDefaults);
+    }
+  })(TREE);
+
+  // ---------- totals (independent of collapse state) ----------
+  let totalMembers = 0, totalBranches = 0;
+  (function countAll(node){
+    totalMembers++;
+    if (node.children && node.children.length){
+      totalBranches++;
+      node.children.forEach(countAll);
+    }
+  })(TREE);
+  document.getElementById('memberCount').textContent = totalMembers;
+  document.getElementById('branchCount').textContent = totalBranches;
+
+  function hash(str){ let h=0; for(let i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i))|0; } return h; }
+  function jitter(str, range){ return ((Math.abs(hash(str)) % 1000)/1000 - 0.5) * 2 * range; }
+
+  const artWrap = document.getElementById('artWrap');
+  const canvas = document.getElementById('canvas');
+  let zoom = 1;
+
+  function render(){
+    // ---- layout pass ----
+    let leafCounter = 0;
+    const visibleNodes = [];
+    const edges = [];
+
+    function layout(node){
+      visibleNodes.push(node);
+      const kids = (node.children && node.children.length && !node.collapsed) ? node.children : [];
+      if (kids.length === 0){
+        node._x = leafCounter++;
+      } else {
+        kids.forEach(child => { layout(child); edges.push({ parent: node, child }); });
+        node._x = (kids[0]._x + kids[kids.length-1]._x) / 2;
+      }
+    }
+    layout(TREE);
+
+    visibleNodes.forEach(n => {
+      n._px = MARGIN_X + n._x * GAP_X;
+      n._py = MARGIN_TOP + (MAXGEN - n.gen) * LEVEL_Y;
+    });
+
+    const totalW = MARGIN_X * 2 + Math.max(0, leafCounter - 1) * GAP_X;
+    const totalH = MARGIN_TOP + (MAXGEN - 1) * LEVEL_Y + TRUNK_EXTRA;
+
+    // ---- build SVG ----
+    const svgParts = [];
+    svgParts.push(`<svg width="${totalW}" height="${totalH}" viewBox="0 0 ${totalW} ${totalH}" xmlns="http://www.w3.org/2000/svg">`);
+    svgParts.push(`<defs>
+      <filter id="blurSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+      <linearGradient id="trunkGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#6b4423"/>
+        <stop offset="100%" stop-color="#3f2715"/>
+      </linearGradient>
+    </defs>`);
+
+    // soft foliage clusters: group leaf-only children by parent
+    const clusters = [];
+    visibleNodes.forEach(n => {
+      const kids = (n.children && n.children.length && !n.collapsed) ? n.children : [];
+      const leafKids = kids.filter(c => !(c.children && c.children.length && !c.collapsed));
+      if (leafKids.length){
+        const xs = leafKids.map(c => c._px), ys = leafKids.map(c => c._py);
+        const cx = (Math.min(...xs)+Math.max(...xs))/2;
+        const cy = (Math.min(...ys)+Math.max(...ys))/2;
+        const rx = Math.max(100, (Math.max(...xs)-Math.min(...xs))/2 + 110);
+        const ry = 55;
+        clusters.push({cx, cy, rx, ry});
+      }
+    });
+    clusters.forEach(c => {
+      svgParts.push(`<ellipse cx="${c.cx}" cy="${c.cy}" rx="${c.rx}" ry="${c.ry}" fill="#6fa56f" opacity="0.16" filter="url(#blurSoft)"/>`);
+    });
+
+    // ground line + roots beneath trunk
+    const rootPx = TREE._px, rootPy = TREE._py;
+    const groundY = rootPy + 34;
+    svgParts.push(`<path d="M ${rootPx-160},${groundY} Q ${rootPx-80},${groundY-8} ${rootPx},${groundY} Q ${rootPx+80},${groundY+8} ${rootPx+160},${groundY}" stroke="#9c8a55" stroke-width="3" fill="none" opacity="0.5"/>`);
+    [-1,1].forEach(dir => {
+      svgParts.push(`<path d="M ${rootPx},${rootPy+10} Q ${rootPx+dir*40},${groundY+10} ${rootPx+dir*70},${groundY+30}" stroke="#5c3a22" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.55"/>`);
+      svgParts.push(`<path d="M ${rootPx},${rootPy+10} Q ${rootPx+dir*18},${groundY+20} ${rootPx+dir*30},${groundY+38}" stroke="#5c3a22" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="0.45"/>`);
+    });
+    // trunk shape (tapered)
+    svgParts.push(`<path d="M ${rootPx-26},${groundY} C ${rootPx-24},${rootPy+30} ${rootPx-16},${rootPy+5} ${rootPx-13},${rootPy} L ${rootPx+13},${rootPy} C ${rootPx+16},${rootPy+5} ${rootPx+24},${rootPy+30} ${rootPx+26},${groundY} Z" fill="url(#trunkGrad)"/>`);
+
+    // branches
+    edges.forEach(({parent, child}) => {
+      const style = EDGE_STYLE[child.gen] || {color:'#3f6b4a', width:3};
+      const px = parent._px, py = parent._py, cx = child._px, cy = child._py;
+      const j = jitter(child.name, 16);
+      const dy = cy - py;
+      const d = `M ${px},${py} C ${px+j},${py + dy*0.55} ${cx+j},${cy - dy*0.55} ${cx},${cy}`;
+      svgParts.push(`<path d="${d}" stroke="${style.color}" stroke-width="${style.width}" fill="none" stroke-linecap="round" opacity="0.92"/>`);
+      svgParts.push(`<circle cx="${px}" cy="${py}" r="${Math.max(2.5, style.width/2.4)}" fill="${style.color}"/>`);
+    });
+
+    svgParts.push('</svg>');
+
+    // ---- build labels ----
+    const labelParts = [];
+    visibleNodes.forEach((n, idx) => {
+      const isRoot = (n === TREE);
+      const hasKids = n.children && n.children.length;
+      const icon = isRoot ? '🌳' : (hasKids ? '🌿' : '🍃');
+      const classes = ['leaf-label'];
+      if (isRoot) classes.push('root');
+      if (n.gen === 2) classes.push('gen2');
+      let inner = `<span class="ic">${icon}</span><span class="name">${n.name}</span>`;
+      if (hasKids){
+        inner += `<button class="toggle-btn" type="button" data-idx="${idx}" aria-label="కొమ్మ తెరువు/మూసివేయు">${n.collapsed ? '+' : '\u2212'}</button>`;
+        inner += `<span class="child-count">${n.children.length}</span>`;
+      }
+      labelParts.push(`<div class="${classes.join(' ')}" style="left:${n._px}px; top:${n._py}px;">${inner}</div>`);
+    });
+
+    artWrap.style.width = totalW + 'px';
+    artWrap.style.height = totalH + 'px';
+    artWrap.innerHTML = `<div class="art-svg-host" style="position:absolute; top:0; left:0;">${svgParts.join('')}</div><div class="label-layer">${labelParts.join('')}</div>`;
+
+    // attach toggle handlers (rebuild each render, references via index into visibleNodes)
+    artWrap.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const idx = parseInt(btn.dataset.idx, 10);
+        const node = visibleNodes[idx];
+        node.collapsed = !node.collapsed;
+        const sl = canvas.scrollLeft, st = canvas.scrollTop;
+        render();
+        canvas.scrollLeft = sl; canvas.scrollTop = st;
+      });
+    });
+  }
+
+  render();
+
+  // ---------- Expand / Collapse all ----------
+  function walkAll(node, fn){
+    fn(node);
+    if (node.children) node.children.forEach(c => walkAll(c, fn));
+  }
+  document.getElementById('expandAll').addEventListener('click', () => {
+    walkAll(TREE, n => { if (n.children && n.children.length) n.collapsed = false; });
+    render();
+  });
+  document.getElementById('collapseAll').addEventListener('click', () => {
+    walkAll(TREE, n => { if (n.children && n.children.length) n.collapsed = (n.gen >= 4); });
+    render();
+  });
+
+  // ---------- Zoom ----------
+  const pane = document.getElementById('zoomPane');
+  const pct = document.getElementById('zoomPct');
+  function applyZoom(){
+    pane.style.transform = `scale(${zoom})`;
+    pct.textContent = Math.round(zoom*100) + '%';
+  }
+  document.getElementById('zoomIn').addEventListener('click', () => { zoom = Math.min(1.6, zoom+0.1); applyZoom(); });
+  document.getElementById('zoomOut').addEventListener('click', () => { zoom = Math.max(0.35, zoom-0.1); applyZoom(); });
+  document.getElementById('zoomReset').addEventListener('click', () => { zoom = 1; applyZoom(); });
+
+  // ---------- Drag to pan ----------
+  let isDown = false, startX, startY, scrollLeft, scrollTop;
+  canvas.addEventListener('mousedown', (e) => {
+    isDown = true;
+    canvas.classList.add('grabbing');
+    startX = e.pageX; startY = e.pageY;
+    scrollLeft = canvas.scrollLeft; scrollTop = canvas.scrollTop;
+  });
+  window.addEventListener('mouseup', () => { isDown = false; canvas.classList.remove('grabbing'); });
+  window.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    canvas.scrollLeft = scrollLeft - (e.pageX - startX);
+    canvas.scrollTop = scrollTop - (e.pageY - startY);
+  });
+
+  window.addEventListener('load', () => {
+    canvas.scrollLeft = (canvas.scrollWidth - canvas.clientWidth) / 2;
+    canvas.scrollTop = canvas.scrollHeight - canvas.clientHeight; // start near the trunk
+  });
+</script>
+
+</body>
+</html>
